@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra o Amor da Sua Vida</title>
+    <!-- Importando fontes para um visual mais charmoso -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS para estilizar e animar a página */
+        :root {
+            --primary-color: #e91e63; /* Rosa vibrante */
+            --secondary-color: #ff80ab; /* Rosa claro */
+            --background-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --white-color: #ffffff;
+            --dark-color: #333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-gradient);
+            color: var(--dark-color);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinha ao topo para listas longas */
+            min-height: 100vh;
+            margin: 0;
+            overflow-y: auto; /* Permite a rolagem vertical */
+            padding: 40px 20px; /* Adiciona espaçamento vertical */
+        }
+
+        .quiz-container {
+            background-color: var(--white-color);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px; /* Aumenta um pouco a largura para a lista */
+            text-align: center;
+            /* Animação de entrada */
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            animation: fadeIn 1s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--primary-color);
+            font-size: clamp(2rem, 8vw, 2.8rem); /* Tamanho de fonte responsivo */
+            margin-bottom: 25px;
+            /* Animação do título */
+            animation: slideDown 1s ease-out .5s backwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #question-container {
+            min-height: auto; /* Altura automática */
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            text-align: left;
+        }
+        
+        .question-block:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--secondary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px; /* Botões arredondados */
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+            text-align: center;
+        }
+        
+        /* Estilo para botão de resposta selecionado */
+        .btn.selected {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.5);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px); /* Efeito de flutuar */
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        #submit-btn {
+            margin-top: 40px;
+            width: 100%;
+            background: var(--primary-color);
+            font-size: 1.3rem;
+            padding: 20px;
+        }
+
+        #result-container {
+            display: none;
+        }
+        
+        #result-container h2 {
+            font-family: 'Pacifico', cursive;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        #result-container p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        #love-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            background: linear-gradient(45deg, #e91e63, #ff5722);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 10px;
+        }
+        
+        .heart {
+            font-size: 6rem;
+            animation: beat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+
+        /* Animação do coração pulsando */
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Animação para a troca de tela */
+        .fade-out {
+            animation: fadeOut 0.4s forwards ease-in-out;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+
+        .fade-in-new {
+            animation: fadeInNew 0.4s forwards ease-in-out;
+        }
+
+        @keyframes fadeInNew {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <!-- Conteúdo do Quiz que será trocado via JavaScript -->
+        <div id="quiz-content">
+            <h1>Descubra o Amor da Sua Vida!</h1>
+            <div id="question-container">
+                <!-- As perguntas aparecerão aqui como uma lista -->
+            </div>
+            <!-- Botão para ver o resultado -->
+            <button id="submit-btn" class="btn">Descobrir Agora!</button>
+        </div>
+        
+        <!-- Tela de Resultado, inicialmente escondida -->
+        <div id="result-container">
+            <h2>Parabéns! O universo conspirou e...</h2>
+            <div class="heart">❤️</div>
+            <p>O amor da sua vida se chama:</p>
+            <p id="love-name">Mateus Oliveira de Matos</p>
+            <p> DA A BUCETINHA PRA ELE <P>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para a lógica do Quiz
+        const questionContainer = document.getElementById('question-container');
+        const quizContent = document.getElementById('quiz-content');
+        const resultContainer = document.getElementById('result-container');
+        const submitButton = document.getElementById('submit-btn');
+
+        // Lista de perguntas e respostas
+        const questions = [
+            {
+                question: "Qual sua ideia de um encontro perfeito?",
+                answers: ["Jantar romântico à luz de velas", "Cinema e pipoca, bem agarradinho", "Aventura na natureza", "Festa com os amigos até o sol raiar"]
+            },
+            {
+                question: "Se o amor fosse um sabor, qual seria?",
+                answers: ["Doce como chocolate", "Azedinho como maracujá", "Quente como pimenta", "Refrescante como hortelã"]
+            },
+            {
+                question: "O que mais te atrai em alguém?",
+                answers: ["O sorriso", "O olhar misterioso", "O bom humor", "A inteligência"]
+            },
+            {
+                question: "Você me daria a bct, ein safada?",
+                answers: ["Com certeza, bb!", "Só se pedir com jeitinho...", "Talvez, se você merecer", "Vem descobrir!"]
+            },
+            {
+                question: "Para selar o destino, qual a sua vibe de casal?",
+                answers: ["Casal que viaja o mundo", "Casal que maratona séries", "Casal fitness", "Casal que constrói um império"]
+            }
+        ];
+
+        function startQuiz() {
+            renderAllQuestions();
+        }
+
+        function renderAllQuestions() {
+            questionContainer.innerHTML = ''; // Limpa o container
+
+            questions.forEach((currentQuestion, index) => {
+                // Cria um container para cada bloco de pergunta
+                const questionBlock = document.createElement('div');
+                questionBlock.className = 'question-block';
+
+                // Cria o texto da pergunta
+                const questionText = document.createElement('p');
+                questionText.className = 'question-text';
+                questionText.textContent = `${index + 1}. ${currentQuestion.question}`;
+
+                // Cria o container para as respostas
+                const answersDiv = document.createElement('div');
+                answersDiv.className = 'answers';
+
+                // Cria os botões de resposta
+                currentQuestion.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'btn';
+                    button.textContent = answer;
+                    button.onclick = (event) => {
+                        // Remove a seleção de outros botões na mesma pergunta
+                        const siblings = event.target.parentElement.children;
+                        for (let sib of siblings) {
+                            sib.classList.remove('selected');
+                        }
+                        // Adiciona a classe 'selected' ao botão clicado
+                        event.target.classList.add('selected');
+                    };
+                    answersDiv.appendChild(button);
+                });
+
+                questionBlock.appendChild(questionText);
+                questionBlock.appendChild(answersDiv);
+                questionContainer.appendChild(questionBlock);
+            });
+        }
+
+        function showResult() {
+            quizContent.classList.add('fade-out');
+
+            setTimeout(() => {
+                quizContent.style.display = 'none';
+                resultContainer.style.display = 'block';
+                resultContainer.classList.add('fade-in-new');
+            }, 400); // Duração da animação de saída
+        }
+        
+        // Adiciona o evento de clique ao botão de submissão
+        submitButton.addEventListener('click', showResult);
+
+        // Inicia o quiz assim que a página é carregada
+        window.onload = startQuiz;
+    </script>
+
+</body>
+</html>
